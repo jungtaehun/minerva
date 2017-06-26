@@ -1,0 +1,20 @@
+<h1>Courses#index</h1>
+<p>Find me in app/views/courses/index.html.erb</p>
+
+<% @courses.each do |c| %>
+    <a href="/courses/<%= c.id %>">link</a>
+    <%= c.lecture.name %>
+    <%= c.professor.name %>
+
+    <% if current_user %>
+        <% if Favorite.exists?(course_id: c.id, user_id: current_user.id) %>
+            <%= button_to '관심 강의에서 제거', users_favorites_delete_path(u_id: current_user, c_id: c.id),
+                          method: :post, :onClick => 'alert("관심강의에서 제거되었습니다!")' %>
+            <% else %>
+              <%= button_to '관심 강의에 추가', users_favorites_add_path(u_id: current_user, c_id: c.id),
+                          method: :post, :onClick => 'alert("관심강의에 추가되었습니다!")' %>
+        <% end %>
+    <% end %>
+
+
+<% end %>
