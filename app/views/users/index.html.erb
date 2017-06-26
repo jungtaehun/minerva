@@ -1,0 +1,18 @@
+<h1>Users#index</h1>
+<p>Find me in app/views/users/index.html.erb</p>
+
+
+<% @favorite_courses.each do |f| %>
+    <a href="/courses/<%= f.id %>">link</a>
+    <%= f.lecture.name %>
+    <%= f.professor.name %>
+
+    <% if current_user %>
+        <% if Favorite.exists?(course_id: f.id, user_id: current_user.id) %>
+            <%= button_to '관심 강의에서 제거', users_favorites_delete_path(u_id: current_user, c_id: f.id),
+                          method: :post, :onClick => 'alert("관심강의에서 제거되었습니다!")' %>
+        <% end %>
+    <% end %>
+
+
+<% end %>

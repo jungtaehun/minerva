@@ -1,0 +1,25 @@
+<h1>Evaluations#new</h1>
+<p>Find me in app/views/evaluations/new.html.erb</p>
+
+<%= form_for @evaluation do |f| %>
+
+    <%= f.text_field :course_id, id: "tags", placeholder: "lecture(professor)", data: {autocomplete_source: @courses.map{ |t| {:label => t.lecture.name + "(" + t.professor.name + ")", value: t.id}}}%> <br>
+    <%= f.hidden_field :course_id, id: "course_id" %>
+    <%= f.number_field :point, placeholder:"point" %> <br>
+    <%= f.text_field :content, placeholder:"content" %> <br>
+    <%= f.submit "평가 완료하기" %> <br>
+
+<% end %>
+
+<script>
+  $( function() {
+      $("#tags").autocomplete({
+          source: $('#tags').data('autocomplete-source'),
+          select: function(event, ui) {
+              event.preventDefault();
+              $(this).val(ui.item.label);
+              $('#course_id').val(ui.item.value);
+          }
+      })
+  })
+</script>
