@@ -3,6 +3,7 @@ class EvaluationsController < ApplicationController
     @evaluations = Evaluation.all
     
   end
+  before_action :authenticate_user!
 
   def new
     @evaluation = Evaluation.new

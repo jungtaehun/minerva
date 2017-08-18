@@ -1,15 +1,104 @@
-<h2>Log in</h2>
+<style>
+    .kut-minerva {
+        background-image: url("/assets/moonowl.jpg");
+        width: 100%;
+        height: -webkit-fill-available;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+        .container {
+        position: absolute;
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .card-panel {
+        position: relative;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%); 
+    }
+    
+    .input-field {
+        display: inline-block;
+        width: 25%;
+    }
+    
+    .btn {
+        width: 25%;
+    }
+  </style>
+  
+  <script>
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
+</script>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email, required: false, autofocus: true %>
-    <%= f.input :password, required: false %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-  </div>
+<div id="alert_modal" class="modal">
+    <div class="modal-content">
+        <h5>한국기술교육대학교 강의평가 프로젝트</h5>
+        <p>현재 강의평가로는 충분한 정보를 얻을 수 없다고 판단해서 시작된 프로젝트
+            <br>
+            <br>한국기술교육대학교 강의평가 프로젝트는 익명성을 강조합니다.
+            <br>
+            <br>본 사이트는 한국기술교육대학교 아우누리 홈페이지의 회원만 평가 및 게시글 작성이 가능하고 비회원은 열람만 가능합니다.
+            <br>
+            <br>아우누리 아이디와 비밀번호는 오직 로그인에만 사용됩니다.
+            <br>
+            <br>강의평가 사이트 운영에 좋은 의견이나 건의사항이 있으면 ' knight7024@likelion.org '으로 메일 바랍니다.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0);" class="modal-action modal-close waves-effect waves-light btn-flat">확인</a>
+    </div>
+</div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
-  </div>
-<% end %>
+<div class="kut-minerva">
+    <div class="container">
+        <div class="card-panel z-depth-4">
+            <h5>한국기술교육대학교 강의평가 프로젝트</h5>
+            <h6 style="font-style: italic; font-weight:100i; padding-left:50%">FOR OUR BETTER SECRET</h6>
+            <br>
+            <h6 style="font-style: italic; font-weight:100i; padding-left:50%; color:red;"><small><%= notice %></small></h6>
+            <br>
+            <div class="form-group">
+                  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                    <div class="row">
+                        <div class="input-field">
+                              <%= f.email_field :email, required: true, class: "validate form-control" %>
+                              <label for="email" data-error="이메일을 정확히 입력해주세요.">이메일</label>
+                       <!--     <input name="id" type="text" class="validate" required>
+                            <label for="ID"><i class="material-icons left">perm_identity</i>아이디</label> -->
+                        </div>
+                    </div>
 
-<%= render "devise/shared/links" %>
+                    <div class="row">
+                        <div class="input-field">
+                              <%= f.password_field :password, required: true, autocomplete: "off", class: "validate form-control" %>
+
+                      <!--      <input name="password" type="password" class="validate" required>
+                            <label for="Password"><i class="material-icons left">lock_open</i>비밀번호</label> -->
+                        </div>
+                    </div>
+                    <%= button_tag(type: "submit", class: "btn waves-effect waves-light z-depth-3") do %>
+                    아우누리 로그인 <i class="material-icons left">done</i>
+                    <% end %>
+            <!--        <button class="btn waves-effect waves-light z-depth-3" type="submit"><i class="material-icons left">done</i>아우누리 로그인</button> -->
+            <% end %>
+                <br>
+                <button class="btn amber lighten-1 waves-effect waves-light z-depth-3 modal-trigger" type="button" data-target="alert_modal"><i class="material-icons left">info</i>프로젝트 정보</button>
+                <br>
+                <br>
+                <%= render "devise/shared/links" %>
+            </div>
+        </div>
+    </div>
+</div>
+

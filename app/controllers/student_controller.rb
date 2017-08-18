@@ -1,4 +1,5 @@
 class StudentController < ApplicationController
+  before_action :authenticate_user!
   def index
     @favorite_courses = []
     Favorite.where('user_id = ?', current_student.id).each do |f|

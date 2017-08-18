@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-//.pagination > .page > .gap > .current > .first > .last > .prev > .next 
+.pagination > .page > .gap > .current > .first > .last > .prev > .next 
 
 
 .pagination a, .pagination span.current, .pagination span.gap {
@@ -48,7 +48,9 @@
 }
 
 
-
+// .pagination a li.active { 
+//     color: #fff; 
+// } 
 
 .ui-widget{
     color:black;
