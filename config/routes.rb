@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
-  resources :users
+
+  devise_for :users
   resources :courses
-  resources :sessions
-  get 'logout', to: 'sessions#destroy', as: 'logout'
+
   resources :evaluations
   root 'evaluations#index'
 
-  post 'users/favorites_delete'
-  post 'users/favorites_add'
+
   post 'courses/search' =>'courses#search'
+  post 'users/favorites_delete' => 'users#favorites_delete'
+  post 'users/favorites_add' => 'users#favorites_add'
+  get 'users/index' => 'users#index'
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

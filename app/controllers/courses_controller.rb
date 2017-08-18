@@ -8,6 +8,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
   end
+
   def search
     search_keyword=params[:keyword]
   @result=Course.all
@@ -23,6 +24,21 @@ class CoursesController < ApplicationController
     respond_to do |format|
         format.js { render :json => @array }
       end
-    
+
+  def favorites_add
+    user = Student.find(params[:u_id])
+    course = Course.find(params[:c_id])
+    if user.favorites_addition(user.id, course.id)
+      redirect_to root_path
+    end
+  end
+
+  def favorites_delete
+    user = Student.find(params[:u_id])
+    course = Course.find(params[:c_id])
+    if user.favorites_deletion(user.id, course.id)
+      redirect_to root_path
+    end
+
   end
 end
