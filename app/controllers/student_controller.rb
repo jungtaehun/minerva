@@ -1,10 +1,9 @@
-class CoursesController < ApplicationController
+class StudentController < ApplicationController
   def index
-    @courses = Course.all
-  end
-
-  def show
-    @course = Course.find(params[:id])
+    @favorite_courses = []
+    Favorite.where('user_id = ?', current_student.id).each do |f|
+      @favorite_courses << Course.find(f.course_id)
+    end
   end
 
   def favorites_add

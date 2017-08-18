@@ -6,24 +6,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def new
-    @user = User.new
-  end
-
-  def create
-    user = User.new(user_params)
-    if user.save
-      redirect_to "/"
-    else
-      redirect_to :back
-    end
-  end
-
   def favorites_add
     user = User.find(params[:u_id])
     course = Course.find(params[:c_id])
     if user.favorites_addition(user.id, course.id)
-      redirect_to request.referer
+      redirect_to root_path
     end
   end
 
@@ -31,13 +18,8 @@ class UsersController < ApplicationController
     user = User.find(params[:u_id])
     course = Course.find(params[:c_id])
     if user.favorites_deletion(user.id, course.id)
-      redirect_to request.referer
+      redirect_to root_path
     end
-  end
-
-  private
-  def user_params
-    params.require(:user).permit(:email, :password)
   end
 
 end

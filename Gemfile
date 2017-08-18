@@ -17,6 +17,9 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem 'devise'
+gem 'devise-bootstrap-views'
+gem 'devise-i18n'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -41,6 +44,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'capybara', '~> 2.13.0'
   gem 'selenium-webdriver'
+  gem 'rails_db'
 end
 
 group :development do

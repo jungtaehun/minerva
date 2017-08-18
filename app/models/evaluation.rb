@@ -6,4 +6,5 @@ class Evaluation < ApplicationRecord
     self.user_id = user.id
     self.save!
   end
+
 end
