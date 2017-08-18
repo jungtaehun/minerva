@@ -24,7 +24,7 @@ class CoursesController < ApplicationController
     respond_to do |format|
         format.js { render :json => @array }
       end
-
+end
   def favorites_add
     user = Student.find(params[:u_id])
     course = Course.find(params[:c_id])
@@ -39,6 +39,5 @@ class CoursesController < ApplicationController
     if user.favorites_deletion(user.id, course.id)
       redirect_to root_path
     end
-
   end
 end

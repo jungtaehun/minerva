@@ -3,10 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.pagination > .page > .gap > .current > .first > .last > .prev > .next 
 
 
 .pagination a, .pagination span.current, .pagination span.gap {
+    color: black;
     float: left;
     padding: 0 14px;
     line-height: 38px;
@@ -15,6 +15,7 @@
     border: 1px solid #DDD;
     border-left-width: 0;
 }
+
 
 .pagination {
     margin: auto;

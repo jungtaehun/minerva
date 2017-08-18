@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'kaminari'  #pagination 도와주는 애
-gem 'will_paginate-materialize' #pagination 꾸며주는 애 
+#gem 'will_paginate-materialize' #pagination 꾸며주는 애 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.0'
 # Use sqlite3 as the database for Active Record
