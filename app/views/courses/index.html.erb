@@ -1,10 +1,21 @@
 <h1>Courses#index</h1>
 <p>Find me in app/views/courses/index.html.erb</p>
 
+
+<div id="gridBox">
+	<input type="text" id="tag" size="14" placeholder="검색" >
+	<button type="button" id="btnEnter" onClick="search()">검색</button>
+</div>
+		
+			</br>
+			<div id="table">
+			</div>
+			</br>
 <% @courses.each do |c| %>
     <a href="/courses/<%= c.id %>">link</a>
     <%= c.lecture.name %>
     <%= c.professor.name %>
+    <br>
 
     <% if current_user %>
         <% if Favorite.exists?(course_id: c.id, user_id: current_user.id) %>
@@ -18,3 +29,31 @@
 
 
 <% end %>
+
+<p>
+    <%= paginate @courses %>
+</p>
+
+<script>
+    function search(){
+      send_data=document.getElementById('tag').value
+      console.log(send_data)
+      $.ajax({
+            method: "POST",
+            url: "/courses/search",
+            data: {  keyword : send_data
+                   
+            },
+            dataType : 'json'
+        })
+            .done(function (data) {
+              console.log(data);
+              console.log(data[0]);
+              console.log(data.length);
+               $("#table").html(" ");
+               $("#table").append("</br>");
+               for (var i=0;i<data.length;i+=2) {
+                    $( "#table").append( "<label>" + data[i] + " : " + data[i+1]+ "</label></br>" ); }
+            });
+    }
+</script>
