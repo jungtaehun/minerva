@@ -12,10 +12,10 @@ class EvaluationsController < ApplicationController
     @user = current_user
     evaluation = Evaluation.new(evaluation_params)
     evaluation.set_user!(@user)
-    if evaluation.save
+    if evaluation.save!
       redirect_to "/"
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 

@@ -34,8 +34,3 @@ File.read("db/seed_data/final.csv").split("\n").each do |line|
   )
 end
 
-puts "make tast account"
-user = User.new
-user.email = "koreatech@koreatech.ac.kr"
-user.password = "koreatech"
-user.save

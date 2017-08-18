@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+
   has_many :evaluations
   has_many :favorites
   has_many :courses, through: :favorites
@@ -11,4 +14,7 @@ class User < ApplicationRecord
     favorite = Favorite.where("user_id = ? AND course_id = ?", user_id, course_id)
     Favorite.destroy(favorite.first.id)
   end
+
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 end
