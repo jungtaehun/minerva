@@ -81,7 +81,7 @@ class SessionsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html {redirect_back fallback_location: root_path, notice: 'failed'}
+        format.html {redirect_to request.referer, notice: 'failed'}
       end
     end
   end
