@@ -5,6 +5,7 @@
         height: -webkit-fill-available;
         background-position: center;
         background-repeat: no-repeat;
+        position: fixed;
     }
     
         .container {
@@ -20,7 +21,7 @@
         background: rgba(255, 255, 255, 0.7);
         border-radius: 10px;
         text-align: center;
-        top: 50%;
+        top: 45%;
         transform: translateY(-50%);
         -webkit-transform: translateY(-50%);
         -ms-transform: translateY(-50%); 
@@ -63,7 +64,7 @@
 <div class="kut-minerva">
     <div class="container">
         <div class="card-panel z-depth-4">
-            <h5>한국기술교육대학교 강의평가 프로젝트</h5>
+            <h5>한국기술교육대학교 강의평가 로그인</h5>
             <h6 style="font-style: italic; font-weight:100i; padding-left:50%">FOR OUR BETTER SECRET</h6>
             <br>
             <h6 style="font-style: italic; font-weight:100i; padding-left:50%; color:red;"><small><%= notice %></small></h6>
@@ -74,26 +75,21 @@
                         <div class="input-field">
                               <%= f.email_field :email, required: true, class: "validate form-control" %>
                               <label for="email" data-error="이메일을 정확히 입력해주세요.">이메일</label>
-                       <!--     <input name="id" type="text" class="validate" required>
-                            <label for="ID"><i class="material-icons left">perm_identity</i>아이디</label> -->
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field">
                               <%= f.password_field :password, required: true, autocomplete: "off", class: "validate form-control" %>
-
-                      <!--      <input name="password" type="password" class="validate" required>
-                            <label for="Password"><i class="material-icons left">lock_open</i>비밀번호</label> -->
+                              <label for="password">비밀번호</label>  
                         </div>
                     </div>
-                    <%= button_tag(type: "submit", class: "btn waves-effect waves-light z-depth-3") do %>
+                    <%= button_tag(type: "submit", class: "btn waves-effect waves-light z-depth-3 blue-grey darken-1") do %>
                     아우누리 로그인 <i class="material-icons left">done</i>
                     <% end %>
-            <!--        <button class="btn waves-effect waves-light z-depth-3" type="submit"><i class="material-icons left">done</i>아우누리 로그인</button> -->
             <% end %>
                 <br>
-                <button class="btn amber lighten-1 waves-effect waves-light z-depth-3 modal-trigger" type="button" data-target="alert_modal"><i class="material-icons left">info</i>프로젝트 정보</button>
+                <button class="btn waves-effect waves-light z-depth-3 modal-trigger light-blue darken-4" type="button" data-target="alert_modal"><i class="material-icons left">info</i>프로젝트 정보</button>
                 <br>
                 <br>
                 <%= render "devise/shared/links" %>

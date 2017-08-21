@@ -9,17 +9,32 @@ class UsersController < ApplicationController
   def favorites_add
     user = User.find(params[:u_id])
     course = Course.find(params[:c_id])
-    if user.favorites_addition(user.id, course.id)
-      redirect_to root_path
+     
+     
+    #if user.favorites_addition(user.id, course.id)
+      respond_to do |format|
+        format.js { render :json => "true" }
     end
+    #else
+    #  respond_to do |format|
+    #    format.js { render :json => @result }
+    #end
+    #end
   end
 
   def favorites_delete
     user = User.find(params[:u_id])
     course = Course.find(params[:c_id])
-    if user.favorites_deletion(user.id, course.id)
-      redirect_to root_path
+    
+    #if user.favorites_deletion(user.id, course.id)
+      respond_to do |format|
+        format.js { render :json => "week"}
     end
+    #else
+    #  respond_to do |format|
+    #    format.js { render :json => @result }
+    #end
+    #end
   end
 
 end

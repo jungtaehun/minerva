@@ -1,20 +1,32 @@
-<h1>Courses#show</h1>
-<p>Find me in app/views/courses/show.html.erb</p>
-<%= @course.lecture.name %>
-<%= @course.professor.name %>
-<% @total = 0 %>
-<% @course.evaluations.each {|e| @total += e.point} %>
-<%= @total %>
-
+<br>
+<div class="container">
+    <table>
+        <thead>
+          <tr>
+              <th>과목명</th>
+              <th>교수명</th>
+              <th>평점</th>
+          </tr>
+        </thead>
+    <% @total = 0 %>
+                <% @course.evaluations.each {|e| @total += e.point} %>
+    <tbody>
+          <tr>
+            <td><%= @course.lecture.name %></td>
+            <td><%= @course.professor.name %></td>
+            <td><%= @total %></td>
+          </tr>
+        </tbody>
+    </table>
+            <br>
 <% if current_user %>
     <% if Favorite.exists?(course_id: @course.id, user_id: current_user.id) %>
         <%= button_to '관심 강의에서 제거', users_favorites_delete_path(u_id: current_user, c_id: @course.id),
-                      method: :post, :onClick => 'alert("관심강의에서 제거되었습니다!")' %>
+                      method: :post, :onClick => 'alert("관심강의에서 제거되었습니다.")', class: "waves-effect waves-light btn-floating red circle" %>
     <% else %>
         <%= button_to '관심 강의에 추가', users_favorites_add_path(u_id: current_user, c_id: @course.id),
-                      method: :post, :onClick => 'alert("관심강의에 추가되었습니다!")' %>
+                      method: :post, :onClick => 'alert("관심강의에 추가되었습니다.")', class: "waves-effect waves-light btn-floating yellow darken-1 circle" %>
     <% end %>
 <% end %>
-
-
+</div>
 

@@ -16,14 +16,19 @@
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
-    .nav {
+    .navb {
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.19), 0 0 10px 0 rgba(0, 0, 0, 0.19);
     }
     
-    .nav-wrapper {
+    nav {
         background-color: #212121;
     }
   </style>
+  <script>
+    $(document).ready(function() {
+      $(".dropdown-button").dropdown();
+    });
+</script>
   </head>
 
   <body>
@@ -34,8 +39,8 @@
   <li><a href="<%= destroy_user_session_path %>" data-method="DELETE">로그아웃</a></li>
 </ul>
 
-<nav class="nav">
-  <div class="nav-wrapper">
+<nav class="navb">
+  <div class="navb-wrapper">
     <div class="container">
     <a href=<%= evaluations_path %> class="brand-logo">Minerva</a>
     <ul class="right hide-on-med-and-down">

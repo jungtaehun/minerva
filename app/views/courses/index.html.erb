@@ -1,39 +1,46 @@
-<h1>Courses#index</h1>
-<p>Find me in app/views/courses/index.html.erb</p>
+<style>
+    .pagination {
+        background-color: transparent;
+    }
+</style>
+<br>
+<div class="container">
+    
 
-
-<div id="gridBox">
-	<input type="text" id="tag" size="14" placeholder="검색" >
-	<button type="button" id="btnEnter" onClick="search()">검색</button>
+<div class="row">
+    <div class="col s6">
+	<input type="text" id="tag" size="14" placeholder="찾으실 강의명을 입력하세요." >
+	</div>
+	<div class="col s6">
+	<button type="button" id="btnEnter" class="waves-effect waves-light btn-floating yellow darken-1" onClick="search()"><i class="material-icons">search</i></button>
+	</div>
 </div>
-		
-			</br>
+
 			<div id="table">
 			</div>
-			</br>
 <% @courses.each do |c| %>
-    <a href="/courses/<%= c.id %>">link</a>
-    <%= c.lecture.name %>
-    <%= c.professor.name %>
-    <br>
 
     <% if current_user %>
         <% if Favorite.exists?(course_id: c.id, user_id: current_user.id) %>
-            <%= button_to '관심 강의에서 제거', users_favorites_delete_path(u_id: current_user, c_id: c.id),
-                          method: :post, :onClick => 'alert("관심강의에서 제거되었습니다!")' %>
-            <% else %>
-              <%= button_to '관심 강의에 추가', users_favorites_add_path(u_id: current_user, c_id: c.id),
-                          method: :post, :onClick => 'alert("관심강의에 추가되었습니다!")' %>
-        <% end %>
+            <button type="button" class="waves-effect waves-light btn-floating red" value=<%= c.id %> onClick="favorites_delete(this)"><i class="material-icons">remove</i></button>
+            <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
+        <%else%>    
+             <button type="button" class="waves-effect waves-light btn-floating blue" value=<%= c.id %> onClick="favorites_add(this)"><i class="material-icons">add</i></button>
+            <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
+         <% end %>
+             <a href="/courses/<%= c.id %>">&nbsp;
+    <%= c.lecture.name %>
+    <%= c.professor.name %>
+    </a>
     <% end %>
-
+<br>
 
 <% end %>
 
 <p>
-    <%= paginate @courses %>
+    <%= paginate @courses %> 
 </p>
-
+</div>
 <script>
     function search(){
       send_data=document.getElementById('tag').value
@@ -55,5 +62,50 @@
                for (var i=0;i<data.length;i+=2) {
                     $( "#table").append( "<label>" + data[i] + " : " + data[i+1]+ "</label></br>" ); }
             });
+    }
+</script>
+
+<script>
+    function favorites_delete(object){
+      c_id=object.value
+      u_id=document.getElementById(c_id).value
+      console.log(u_id)
+      console.log(c_id)
+      $.ajax({
+            method: "POST",
+            url: "/courses/favorites_delete",
+            data: {  c_id : c_id,
+                     u_id : u_id
+                   
+            },
+            dataType : 'json'
+        })
+            .done(function (data) {
+              console.log(data);
+              
+    });
+    }
+</script>
+
+<script>
+    function favorites_add(object){
+      c_id=object.value
+      u_id=document.getElementById(c_id).value
+      console.log(u_id)
+      console.log(c_id)
+      $.ajax({
+            method: "POST",
+            url: "/courses/favorites_add",
+            data: {  c_id : c_id,
+                     u_id : u_id
+                   
+            },
+            dataType : 'json'
+        })
+            .done(function (data) {
+            
+              console.log(data);
+               
+    });
     }
 </script>
