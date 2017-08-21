@@ -26,8 +26,8 @@ class CoursesController < ApplicationController
       end
 end
   def favorites_add
-    user = Student.find(params[:u_id])
-    course = Course.find(params[:c_id])
+    #@user = User.find(params[:u_id])
+    #@course = Course.find(params[:c_id])
      @array=Array.new
      @array << "1"
      @array << "2"
