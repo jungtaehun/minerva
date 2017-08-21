@@ -24,7 +24,12 @@ gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise-i18n'
 
+gem 'bootstrap-sass'
+gem 'simple_form'
+
 gem 'coffee-script-source', '1.8.0'
+
+gem 'figaro'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
