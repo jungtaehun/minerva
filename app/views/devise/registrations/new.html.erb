@@ -1,81 +1,97 @@
 <style>
-    .kut-minerva {
-        background-image: url("/assets/moonowl.jpg");
-        width: 100%;
-        height: -webkit-fill-available;
-        background-position: center;
-        background-repeat: no-repeat;
-        position: fixed;
-    }
-    
-        .container {
-        position: absolute;
-        height: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .card-panel {
-        position: relative;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.7);
-        border-radius: 10px;
-        text-align: center;
-        top: 45%;
-        transform: translateY(-50%);
-        -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%); 
-    }
-    
-    .input-field {
-        display: inline-block;
-        width: 25%;
-    }
-    
-    .btn {
-        width: 25%;
-    }
-  </style>
-  
-  <div class="kut-minerva">
-    <div class="container">
-        <div class="card-panel z-depth-4">
-            <h5>한국기술교육대학교 강의평가 회원가입</h5>
+  body,
+  html {
+    height: 100%;
+  }
+
+  .bamboo-forest {
+    background-image: url("/assets/backbamb.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .container {
+    position: relative;
+    height: 100%;
+  }
+
+  .card-panel {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+  }
+
+  .input-field {
+    display: inline-block;
+    width: 25%;
+  }
+
+  .btn {
+    width: 25%;
+  }
+
+  .remember_me {
+    width: 25%;
+    text-align: left;
+    display: inline-block;
+  }
+
+  .modal-container {
+    position: relative;
+    text-align: center;
+    width: 100%;
+  }
+
+  .modal-field {
+    display: inline-block;
+    width: 33%;
+  }
+</style>
+<!-- body -->
+<div class="bamboo-forest">
+  <div class="container">
+    <div class="card-panel z-depth-4">
+      <h5>대나무숲 회원가입</h5>
+      <h6 style="font-style: italic; font-weight:300; padding-left:50%; color:red; font-size:20px">
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <small><%= f.error_notification %></small>
+            <%= f.hidden_field :hakbun, :value => notice[1] %>
+            </h6>
             <br>
-            <div class="form-group">
-                    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-                    <h6 style="font-style: italic; font-weight:100i; padding-left:50%; color:red;"><%= f.error_notification %></h6>
-                      <br>
-                    <div class="row">
-                        <div class="input-field">
-                              <%= f.email_field :email, required: true, class: "validate form-control" %>
-                              <label for="email" data-error="이메일을 정확히 입력해주세요.">이메일</label>
-                        </div>
-                    </div>
+            <div class="form-group form-inputs">
+              <div class="row">
+                <div class="input-field">
+                  <%= f.email_field :email, required: true, class: "validate", :value => notice[0]+"@koreatech.ac.kr" %>
+                  <label for="email"><i class="material-icons left">perm_identity</i>이메일</label>
+                </div>
+              </div>
 
-                    <div class="row">
-                        <div class="input-field">
-                              <%= f.password_field :password, required: true, autocomplete: "off", class: "validate form-control", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-                              <label for="password">비밀번호</label>  
-                        </div>
-                    </div>
-                    
-                        <div class="row">
-                        <div class="input-field">
-                              <%= f.password_field :password_confirmation, required: true, autocomplete: "off", class: "validate form-control", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-                              <label for="password">비밀번호 확인</label>  
-                        </div>
-                    </div>
-                    
-                    <%= button_tag(type: "submit", class: "btn waves-effect waves-light z-depth-3 indigo darken-2") do %>
-                    회원가입 <i class="material-icons left">vpn_key</i>
-                    <% end %>
-            <% end %>
+              <div class="row">
+                <div class="input-field">
+                  <%= f.password_field :password, required: true, class: "validate", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+                  <label for="password"><i class="material-icons left">lock_open</i>비밀번호</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field">
+                  <%= f.password_field :password_confirmation, required: true, class: "validate", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+                  <label for="password"><i class="material-icons left">autorenew</i>비밀번호 확인</label>
+                </div>
+              </div>
+              <button class="btn waves-effect waves-light z-depth-3" type="submit" style="background-color: #FF7F00;">
+                <i class="material-icons left">done</i>회원가입
+              </button>
             </div>
+        <% end %>
         </div>
-    </div>
+  </div>
 </div>
-
-
-
-

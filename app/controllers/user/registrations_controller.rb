@@ -1,11 +1,22 @@
 class User::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
+  #before_action :configure_sign_up_params, only: [:create, :new]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    if notice == nil
+      redirect_to new_user_session_path
+    else
+      user_check = User.where(:hakbun => notice[1]).count
+      if user_check >= 1
+        respond_to do |format|
+          format.html {redirect_to new_user_session_path, notice: 'duplicated'}
+        end
+      elsif user_check == 0
+        super
+      end
+    end
+  end
 
   # POST /resource
   # def create
@@ -36,12 +47,12 @@ class User::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  #protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  #def configure_sign_up_params
+  #  devise_parameter_sanitizer.permit(:sign_up, keys: [:hakbun])
+  #end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

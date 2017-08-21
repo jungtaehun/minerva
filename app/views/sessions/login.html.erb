@@ -1,0 +1,79 @@
+<style>
+  body,
+  html {
+    height: 100%;
+  }
+
+  .bamboo-forest {
+    background-image: url("/assets/backbamb.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .container {
+    position: relative;
+    height: 100%;
+  }
+
+  .card-panel {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+  }
+
+  .input-field {
+    display: inline-block;
+    width: 25%;
+  }
+
+  .btn {
+    width: 25%;
+  }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('.modal').modal();
+    });
+</script>
+
+<div class="bamboo-forest">
+  <div class="container">
+    <div class="card-panel z-depth-4">
+      <h5>한국기술교육대학교 대나무숲 프로젝트</h5>
+      <h6 style="font-style: italic; font-weight:100; padding-left:50%">FOR OUR BETTER SECRET</h6>
+      <br>
+      <h6 style="font-style: italic; font-weight:100; padding-left:50%; color:red;">
+        <small><%= notice %></small>
+      </h6>
+      <br>
+      <div class="form-group">
+        <form action="/sessions/auth" method="POST">
+          <div class="row">
+            <div class="input-field">
+              <input name="id" type="text" class="validate" required>
+              <label for="ID"><i class="material-icons left">perm_identity</i>아이디</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field">
+              <input name="password" type="password" class="validate" required>
+              <label for="Password"><i class="material-icons left">lock_open</i>비밀번호</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light z-depth-3" type="submit" style="background-color: #22449C;"><i class="material-icons left">autorenew</i>아우누리로 시작하기
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
