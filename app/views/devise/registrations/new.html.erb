@@ -59,7 +59,8 @@
 <div class="bamboo-forest">
   <div class="container">
     <div class="card-panel z-depth-4">
-      <h5>대나무숲 회원가입</h5>
+      <h5>미네르바 회원가입</h5>
+      <h5>비밀번호를 다시 입력해주세요</h5>
       <h6 style="font-style: italic; font-weight:300; padding-left:50%; color:red; font-size:20px">
         <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
             <small><%= f.error_notification %></small>
@@ -69,7 +70,7 @@
             <div class="form-group form-inputs">
               <div class="row">
                 <div class="input-field">
-                  <%= f.email_field :email, required: true, class: "validate", :value => notice[0]+"@koreatech.ac.kr" %>
+                  <%= f.email_field :email, required: true, :readonly => true,  :value => notice[0]+"@koreatech.ac.kr" %>
                   <label for="email"><i class="material-icons left">perm_identity</i>이메일</label>
                 </div>
               </div>
@@ -77,16 +78,12 @@
               <div class="row">
                 <div class="input-field">
                   <%= f.password_field :password, required: true, class: "validate", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-                  <label for="password"><i class="material-icons left">lock_open</i>비밀번호</label>
+                  <label for="password"><i class="material-icons left">lock_open</i>비밀번호를 다시 입력해주세요</label>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="input-field">
-                  <%= f.password_field :password_confirmation, required: true, class: "validate", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-                  <label for="password"><i class="material-icons left">autorenew</i>비밀번호 확인</label>
-                </div>
-              </div>
+
+
               <button class="btn waves-effect waves-light z-depth-3" type="submit" style="background-color: #FF7F00;">
                 <i class="material-icons left">done</i>회원가입
               </button>
