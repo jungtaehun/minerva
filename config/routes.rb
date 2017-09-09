@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => 'user/registrations'}
   resources :courses
 
   resources :evaluations
   root 'evaluations#index'
 
+  get 'sessions/login' => 'sessions#login'
+  get 'sessions/test' => 'sessions#test'
+
+  post 'sessions/auth' => 'sessions#auth'
 
   post 'courses/search' =>'courses#search'
   post 'users/favorites_delete' => 'users#favorites_delete'
