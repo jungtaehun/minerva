@@ -74,10 +74,10 @@ class SessionsController < ApplicationController
     end
 
     if res.body.include? "Logined : Y"
-        hakbun = res.body.split('sEmpNo : ')[1].split(' <br/>')[0]
+      student_id = res.body.split('sEmpNo : ')[1].split(' <br/>')[0]
         # NameK1 = res.body.split('sUserNmK : ')[1].split(' <br/>')[0].force_encoding('UTF-8')
       respond_to do |format|
-        format.html {redirect_to new_user_registration_path, notice: [username, hakbun]}
+        format.html {redirect_to new_user_registration_path, notice: [username, student_id]}
       end
     else
       respond_to do |format|
@@ -89,7 +89,7 @@ class SessionsController < ApplicationController
   def test
 
     @ttt = params[:id]
-    @aaa = params[:hakbun]
+    @aaa = params[:student_id]
   end
 
   def destroy

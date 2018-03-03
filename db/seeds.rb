@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 puts "Inserting lecture data.."
-File.read("db/seed_data/koreatech_lecture.csv").split("\n").each do |line|
+File.read("db/seed_data/k_lecture.csv").split("\n").each do |line|
   data = line.strip.split(",")
   puts data.to_s
   Lecture.create(
@@ -17,7 +17,7 @@ File.read("db/seed_data/koreatech_lecture.csv").split("\n").each do |line|
 end
 
 puts "Inserting professor data.."
-File.read("db/seed_data/koreatech_professor.csv").split("\n").each do |line|
+File.read("db/seed_data/k_professor.csv").split("\n").each do |line|
   data = line.strip.split(",")
   puts data.to_s
   Professor.create(
@@ -30,10 +30,13 @@ puts "Inserting course data.."
 File.read("db/seed_data/final.csv").split("\n").each do |line|
   data = line.strip.split(",")
   puts data.to_s
-  Course.create(
-      id: data[0],
+  Course.create!(
       professor_id: data[1],
-      lecture_id: data[2]
+      lecture_id: data[2],
+      dept: data[3],
+      year: data[4],
+      samester: data[5],
+      grade: data[6]
   )
 end
 

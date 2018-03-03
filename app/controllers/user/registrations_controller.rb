@@ -7,7 +7,7 @@ class User::RegistrationsController < Devise::RegistrationsController
     if notice == nil
       redirect_to new_user_session_path
     else
-      user_check = User.where(:hakbun => notice[1]).count
+      user_check = User.where(:student_id => notice[1]).count
       if user_check >= 1
         respond_to do |format|
           format.html {redirect_to new_user_session_path, notice: 'duplicated'}

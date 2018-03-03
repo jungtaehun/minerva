@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :evaluations
   has_many :favorites
+  has_many :courses, through: :evaluations
   has_many :courses, through: :favorites
 
   def favorites_addition(user_id, course_id)

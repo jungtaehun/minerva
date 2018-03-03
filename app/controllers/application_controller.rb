@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   #helper_method :current_user
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:hakbun])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:student_id])
   end
   
 end
