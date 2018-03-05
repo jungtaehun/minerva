@@ -1,0 +1,27 @@
+@import 'bootstrap';
+@import "courses";
+@import "evaluations";
+
+.well {
+h2 {
+    margin-top: 0;
+}
+}
+
+@media screen and (max-width: 500px) {
+    #muser { visibility: visible; }
+    #mlogin { visibility: visible; }
+}
+@media screen and (min-width: 1000px) {
+    #muser { visibility: hidden; }
+    #mlogin { visibility: hidden; }
+}
+
+.progress {
+    background-image: linear-gradient(to bottom, #bbb 0%, #ccc 100%)
+}
+
+#footer {
+    margin-top: 20px;
+}
+

@@ -1,5 +1,5 @@
 // Place all the styles related to the Evaluations controller here.
-// They will automatically be included in application.css.
+// They will automatically be included in application.scss.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .ui-widget{
     color:black;
@@ -8,7 +8,7 @@
     .ui-autocomplete {
     position: absolute;
     top: 100%;
-    left: 5;
+    left: 5px;
     z-index: 1000;
     float: left;
     display: none;

@@ -1,20 +1,27 @@
 <style>
     .pagination {
-        background-color: transparent;
+        background-color: #ffffff;
     }
 </style>
 <br>
 <div class="container">
     
-
+<!--
 <div class="row">
-    <div class="col s6">
+  <div class="col s6">
 	<input type="text" id="tag" size="14" placeholder="찾으실 강의명을 입력하세요." >
 	</div>
 	<div class="col s6">
 	<button type="button" id="btnEnter" class="waves-effect waves-light btn-floating yellow darken-1" onClick="search()"><i class="material-icons">search</i></button>
 	</div>
 </div>
+-->
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="찾으실 강의명을 입력하세요." aria-label="찾으실 강의명을 입력하세요." aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" id="btnEnter" type="button" onClick="search()">검색</button>
+    </div>
+  </div>
 
 			<div id="table">
 			</div>
@@ -23,24 +30,24 @@
     <% if current_user %>
       <div id="<%= current_user.id%>_<%= c.id%>">
         <% if Favorite.exists?(course_id: c.id, user_id: current_user.id) %>
-            <button type="button" class="waves-effect waves-light btn-floating red" value=<%= c.id %> onClick="favorites_delete(this)"><i class="material-icons">remove</i></button>
+            <!--<button type="button" class="waves-effect waves-light btn-floating red" value=<%= c.id %> onClick="favorites_delete(this)"><i class="material-icons">remove</i></button>-->
+            <button type="button" class="btn btn-danger" value=<%= c.id %> onClick="favorites_delete(this)">제거</button>
             <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
         <%else%>    
-             <button type="button" class="waves-effect waves-light btn-floating blue" value=<%= c.id %> onClick="favorites_add(this)"><i class="material-icons">add</i></button>
+             <!--<button type="button" class="waves-effect waves-light btn-floating blue" value=<%= c.id %> onClick="favorites_add(this)"><i class="material-icons">add</i></button>-->
+             <button type="button" class="btn btn-outline-primary" value=<%= c.id %> onClick="favorites_add(this)">추가</button>
             <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
          <% end %>
+        <a href="/courses/<%= c.id %>">&nbsp;<%= c.lecture.name + "(" + c.professor.name + ")"%></a>
       </div>
-             <a href="/courses/<%= c.id %>">&nbsp;
-    <%= c.lecture.name %>
-    <%= c.professor.name %>
-    </a>
+
     <% end %>
 <br>
 
 <% end %>
 
 <p>
-    <%= paginate @courses %> 
+    <%= paginate @courses, theme: 'twitter-bootstrap-4', pagination_class: "justify-content-center"%>
 </p>
 </div>
 <script>

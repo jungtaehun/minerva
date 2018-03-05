@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'lecture/:id' => 'lecture#info'
+
+  get 'professor/:id' => 'professor#info'
+
   devise_for :users, :controllers => {:registrations => 'user/registrations'}
   resources :courses
 

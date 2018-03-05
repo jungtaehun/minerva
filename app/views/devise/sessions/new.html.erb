@@ -1,21 +1,32 @@
 <style>
-  body,
-  html {
-    height: 100%;
+  div{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  body{
+    height: 100%
   }
 
-  .bamboo-forest {
+  body {
     background-image: url("/assets/backbamb.jpg");
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
   }
 
-  .container {
-    position: relative;
-    height: 100%;
+  .card {
+    position: absolute;
+    width: 500px;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
   }
-
+/*
   .card-panel {
     position: relative;
     display: inline-block;
@@ -37,23 +48,24 @@
   .btn {
     width: 25%;
   }
+  */
+    .remember_me {
+      width: 25%;
+      text-align: left;
+      display: inline-block;
+    }
 
-  .remember_me {
-    width: 25%;
-    text-align: left;
-    display: inline-block;
-  }
+    .modal-container {
+      position: relative;
+      text-align: center;
+      width: 100%;
+    }
 
-  .modal-container {
-    position: relative;
-    text-align: center;
-    width: 100%;
-  }
+    .modal-field {
+      display: inline-block;
+      width: 33%;
+    }
 
-  .modal-field {
-    display: inline-block;
-    width: 33%;
-  }
 </style>
 
 <script>
@@ -67,76 +79,43 @@
         }
     });
 </script>
-<!-- Modal -->
-<div id="sign_modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-container">
-      <h5>아우누리 로그인</h5>
-      <br>
-      <div class="form-group">
-        <form action="/sessions/auth" method="POST">
-          <div class="row">
-            <div class="input-field modal-field">
-              <input name="id" type="text" class="validate" required>
-              <label for="ID"><i class="material-icons left">perm_identity</i>아이디</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field modal-field">
-              <input name="password" type="password" class="validate" required>
-              <label for="Password"><i class="material-icons left">lock_open</i>비밀번호</label>
-            </div>
-          </div>
-          <button class="btn waves-effect waves-light z-depth-3" type="submit" style="background-color: #22449C; width: 33%">로그인</button>
-        </form>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">아우누리 로그인</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+
+      <%= bootstrap_form_tag url: '/sessions/auth', method: 'post' do |f| %>
+      <div class="modal-body">
+          <%= f.text_field :id, class: 'validate' %>
+          <%= f.password_field :password, class: 'validate' %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <%= f.submit "로그인", class: "btn btn-primary", style: "background-color: #22449C;" %>
+      </div>
+      <% end %>
+
     </div>
   </div>
-  <br>
 </div>
-<!-- body -->
-<div class="bamboo-forest">
-  <div class="container">
-    <div class="card-panel z-depth-4">
-      <h5>한국기술교육대학교 대나무숲 프로젝트</h5>
-      <h6 style="font-style: italic; font-weight:300; padding-left:50%">FOR OUR BETTER SECRET</h6>
-      <br>
-      <h6 style="font-style: italic; font-weight:300; padding-left:50%; color:red;">
-        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            <small><%= f.error_notification %></small>
-            </h6>
-            <br>
-            <div class="form-group">
-              <div class="row">
-                <div class="input-field">
-                  <%= f.email_field :email, required: false, class: "validate" %>
-                  <label for="email"><i class="material-icons left">perm_identity</i>이메일</label>
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="input-field">
-                  <%= f.password_field :password, required: false, class: "validate" %>
-                  <label for="password"><i class="material-icons left">lock_open</i>비밀번호</label>
-                </div>
-              </div>
-
-              <div class="remember_me">
-                <%= f.check_box :remember_me, checked: devise_mapping.rememberable? %>
-                <%= f.label :'로그인 상태 유지', for: 'remember_me' %>
-              </div>
-              <br>
-              <br>
-              <button class="btn waves-effect waves-light z-depth-3" type="submit" style="background-color: #FF7F00;">
-                <i class="material-icons left">done</i>로그인
-              </button>
-              <br>
-              <br>
-              <button class="btn lighten-1 waves-effect waves-light z-depth-3 modal-trigger" type="button" data-target="sign_modal">
-                <i class="material-icons left">navigate_next</i>아우누리로 회원가입
-              </button>
-            </div>
-        <% end %>
-        </div>
+  <div class="card">
+    <h4 class="card-header">미네르바 로그인</h4>
+    <div class="card-body">
+      <%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= f.email_field :email, required: false, class: "validate" %>
+        <%= f.password_field :password, required: false, class: "validate" %>
+        <%= f.check_box :remember_me, checked: devise_mapping.rememberable? %>
+        <a href="#" data-toggle="modal"  data-target="#exampleModalCenter">회원등록이 안 되어있으신가요? (아우누리로 회원가입)</a><br/>
+        <%= f.submit "로그인" %>
+      <% end %>
+    </div>
   </div>
-</div>

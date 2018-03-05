@@ -4,8 +4,9 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
+gem 'thin'
 gem 'kaminari'  #pagination 도와주는 애
+gem 'bootstrap4-kaminari-views'
 #gem 'will_paginate-materialize' #pagination 꾸며주는 애 
 #gem 'materialize-sass'
 
@@ -24,13 +25,15 @@ gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise-i18n'
 
-gem 'bootstrap-sass'
+gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap_form'
 gem 'simple_form'
 
 gem 'coffee-script-source', '1.8.0'
-
+gem 'nokogiri'
 gem 'figaro'
 
+gem 'jquery-turbolinks'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'json'
@@ -38,7 +41,7 @@ gem 'faraday'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -56,6 +59,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'capybara', '~> 2.13.0'
   gem 'selenium-webdriver'
+  gem 'annotate'
+  gem 'better_errors'
   gem 'rails_db'
 end
 

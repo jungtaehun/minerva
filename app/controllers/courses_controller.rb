@@ -2,7 +2,6 @@ class CoursesController < ApplicationController
   def index
     require 'kaminari'
     @courses = Course.page(params[:page])
-    #@courses = Course.all
   end
 
   def show
@@ -11,8 +10,8 @@ class CoursesController < ApplicationController
 
   def search
     search_keyword=params[:keyword]
-  @result=Course.all
-  @array=Array.new
+    @result=Course.all
+    @array=Array.new
     @result.each do |k|
     
     if !k.lecture.name.exclude? "#{search_keyword}"

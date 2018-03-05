@@ -45,6 +45,37 @@
     });
 </script>
 
+<div class="jumbotron">
+  <div class="card">
+    <h4 class="card-header">한국기술교육대학교 대나무숲 프로젝트</h4>
+    <div class="card-body">
+      <%= bootstrap_form_tag url: '/sessions/auth', method: "post" do |f| %>
+        <%= f.label :id, '아이디' %>
+        <%= f.text_field :id, hide_label: true %>
+        <%= f.label :password, '비밀번호' %>
+        <%= f.password_field :password, hide_label: true %>
+        <a href="/signup" >회원등록이 안 되어있으신가요?</a><br/>
+        <%= f.submit "로그인" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!--
+<div class="card">
+  <h4 class="card-header">한국기술교육대학교 대나무숲 프로젝트</h4>
+  <div class="card-body">
+    <%= bootstrap_form_tag url: '/sessions/auth', method: "post" do |f| %>
+      <%= f.label :id, '아이디' %>
+      <%= f.text_field :id, hide_label: true %>
+      <%= f.label :password, '비밀번호' %>
+      <%= f.password_field :password, hide_label: true %>
+      <a href="/signup" >회원등록이 안 되어있으신가요?</a><br/>
+      <%= f.submit "로그인" %>
+    <% end %>
+  </div>
+</div>
+-->
+<!--
 <div class="bamboo-forest">
   <div class="container">
     <div class="card-panel z-depth-4">
@@ -56,6 +87,8 @@
       </h6>
       <br>
       <div class="form-group">
+
+
         <form action="/sessions/auth" method="POST">
           <div class="row">
             <div class="input-field">
@@ -73,7 +106,20 @@
           <button class="btn waves-effect waves-light z-depth-3" type="submit" style="background-color: #22449C;"><i class="material-icons left">autorenew</i>아우누리로 시작하기
           </button>
         </form>
+
+
+        <%= bootstrap_form_tag url: '/sessions/auth', method: "post" do |f| %>
+          <%= f.label :id, '아이디' %>
+          <%= f.text_field :id, hide_label: true %>
+          <%= f.label :password, '비밀번호' %>
+          <%= f.password_field :password, hide_label: true %>
+          <a href="/signup" >회원등록이 안 되어있으신가요?</a><br/>
+          <%= f.submit "로그인" %>
+        <% end %>
+
+
       </div>
     </div>
   </div>
 </div>
+-->

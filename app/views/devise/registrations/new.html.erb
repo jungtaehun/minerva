@@ -1,43 +1,31 @@
 <style>
-  body,
-  html {
-    height: 100%;
+  div{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  body{
+    height: 100%
   }
 
-  .bamboo-forest {
+  body {
     background-image: url("/assets/backbamb.jpg");
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
   }
 
-  .container {
-    position: relative;
-    height: 100%;
-  }
-
-  .card-panel {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    text-align: center;
+  .card {
+    position: absolute;
+    width: 500px;
+    left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
+    margin-left: -250px;
+    margin-top: -250px;
   }
-
-  .input-field {
-    display: inline-block;
-    width: 25%;
-  }
-
-  .btn {
-    width: 25%;
-  }
-
   .remember_me {
     width: 25%;
     text-align: left;
@@ -55,7 +43,19 @@
     width: 33%;
   }
 </style>
-<!-- body -->
+
+<div class="card">
+  <h4 class="card-header">미네르바 회원가입</h4>
+  <div class="card-body">
+    <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= f.email_field :email, required: true, :readonly => true,  :value => notice[0]+"@koreatech.ac.kr" %>
+      <%= f.password_field :password, required: true, class: "validate", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+      <%= f.submit "회원가입" %>
+    <% end %>
+  </div>
+</div>
+
+<!--
 <div class="bamboo-forest">
   <div class="container">
     <div class="card-panel z-depth-4">
@@ -92,3 +92,4 @@
         </div>
   </div>
 </div>
+-->

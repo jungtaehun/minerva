@@ -5,17 +5,9 @@
   <link rel="icon" href="/assets/owl.png">
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css"/>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"/>
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500" rel="stylesheet">
   <style>
     body {
       font-family: "Quicksand", sans-serif;
@@ -48,13 +40,33 @@
   </head>
 
   <body>
-    <!-- Dropdown -->
-<ul id="dropdown1" class="dropdown-content">
-  <li><a href=<%= users_index_path %>>마이 페이지</a></li>
-  <li class="divider"></li>
-  <li><a href="<%= destroy_user_session_path %>" data-method="DELETE">로그아웃</a></li>
-</ul>
 
+  <div class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <div class="navbar-brand">
+        <%= link_to 'Minerva', evaluations_path, class: 'navbar-brand brand-logo' %>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li><%= link_to '과목 목록', courses_path, class: "nav-item nav-link" %></li>
+          <% if current_user %>
+            <li><%= link_to '새 평가', new_evaluation_path, class: "nav-item nav-link" %></li>
+          <% end %>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <% if current_user %>
+            <li><%= link_to current_user.email, users_index_path, class: "nav-item nav-link" %></li>
+            <li><%= link_to '로그아웃', destroy_user_session_path, class: "nav-item nav-link", :method => 'delete' %></li>
+          <% else %>
+            <li><%= link_to '로그인', new_user_session_path, class: "nav-item nav-link" %></li>
+            <li><%= link_to '회원가입', new_user_registration_path, class: "nav-item nav-link" %></li>
+          <% end %>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+<!--
 <nav class="navb">
   <div class="navb-wrapper">
     <div class="container">
@@ -72,6 +84,21 @@
   </div>
   </div>
 </nav>
-    <%= yield %>
+-->
+  <div class="container">
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>">
+        <%= value %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <%= yield %>
+<!--
+  <div id="footer">
+    <p class="text-muted">Created by LIKELION X KOREATECH</p>
+  </div>
+-->
   </body>
 </html>
