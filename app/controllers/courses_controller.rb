@@ -12,17 +12,28 @@ class CoursesController < ApplicationController
     search_keyword=params[:keyword]
     @result=Course.all
     @array=Array.new
+    i=0
     @result.each do |k|
     
-    if !k.lecture.name.exclude? "#{search_keyword}"
-      @array << k.lecture.name
-      @array << k.professor.name
-    end
-  end
-    
-    respond_to do |format|
-        format.js { render :json => @array }
+      if !k.lecture.name.exclude? "#{search_keyword}"
+        hash = Hash.new
+        if Favorite.exists?(course_id: k.id, user_id: current_user.id) 
+          hash["fav"]=true
+        else
+          hash["fav"]=false
+        end
+          hash["lecture_name"]= k.lecture.name
+          hash["professor"]= k.professor.name
+          hash["lecture_code"]= k.id
+          @array[i]=hash
+          i+=1
       end
+    end
+    
+    # respond_to do |format|
+    #     format.js { render :json => @array }
+    #   end
+    render :json => @array
 end
   def favorites_add
     user = User.find(params[:u_id])

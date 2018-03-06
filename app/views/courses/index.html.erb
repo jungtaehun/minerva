@@ -2,6 +2,33 @@
     .pagination {
         background-color: #ffffff;
     }
+#toast{
+	position: fixed;
+	top: 80%;
+	left: 50%;
+	width: 200px;
+	background-color: black;
+	color:white;
+	margin-left: -100px;
+	border: 1px solid #666;
+	padding: 10px 0 ;
+	text-align:center;
+	opacity: .9;
+
+	
+	/* opacity time */
+	-webkit-transition: opacity 0.5s ease-out;
+	-moz-transition: opacity 0.5s ease-out;
+	-ms-transition: opacity 0.5s ease-out;
+	-o-transition: opacity 0.5s ease-out;
+	transition: opacity 0.5s ease-out;
+	
+	/* round border */
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;	
+}
+
 </style>
 <br>
 <div class="container">
@@ -16,28 +43,31 @@
 	</div>
 </div>
 -->
+<input type="hidden" id="uid" value="<%=current_user.id%>">
   <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="찾으실 강의명을 입력하세요." aria-label="찾으실 강의명을 입력하세요." aria-describedby="basic-addon2">
+    <input id = "tag" type="text" class="form-control" placeholder="찾으실 강의명을 입력하세요." aria-label="찾으실 강의명을 입력하세요." aria-describedby="basic-addon2">
     <div class="input-group-append">
       <button class="btn btn-outline-secondary" id="btnEnter" type="button" onClick="search()">검색</button>
     </div>
   </div>
 
-			<div id="table">
-			</div>
+			<!--<div id="table">-->
+<div id="list">			<!--</div>-->
 <% @courses.each do |c| %>
 
     <% if current_user %>
       <div id="<%= current_user.id%>_<%= c.id%>">
-        <% if Favorite.exists?(course_id: c.id, user_id: current_user.id) %>
-            <!--<button type="button" class="waves-effect waves-light btn-floating red" value=<%= c.id %> onClick="favorites_delete(this)"><i class="material-icons">remove</i></button>-->
-            <button type="button" class="btn btn-danger" value=<%= c.id %> onClick="favorites_delete(this)">제거</button>
-            <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
-        <%else%>    
-             <!--<button type="button" class="waves-effect waves-light btn-floating blue" value=<%= c.id %> onClick="favorites_add(this)"><i class="material-icons">add</i></button>-->
-             <button type="button" class="btn btn-outline-primary" value=<%= c.id %> onClick="favorites_add(this)">추가</button>
-            <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
-         <% end %>
+         
+            <% if Favorite.exists?(course_id: c.id, user_id: current_user.id) %>
+                <!--<button type="button" class="waves-effect waves-light btn-floating red" value=<%= c.id %> onClick="favorites_delete(this)"><i class="material-icons">remove</i></button>-->
+                <button id = "btn_del" type="button" class="btn btn-danger" value=<%= c.id %> onClick="favorites_delete(this)">제거</button>
+                <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
+            <%else%>    
+                 <!--<button type="button" class="waves-effect waves-light btn-floating blue" value=<%= c.id %> onClick="favorites_add(this)"><i class="material-icons">add</i></button>-->
+                 <button id = "btn_add" type="button" class="btn btn-outline-primary" value=<%= c.id %> onClick="favorites_add(this)">추가</button>
+                <input type="hidden" id="<%= c.id%>" value=<%= current_user.id%>>
+             <% end %>
+         
         <a href="/courses/<%= c.id %>">&nbsp;<%= c.lecture.name + "(" + c.professor.name + ")"%></a>
       </div>
 
@@ -50,10 +80,19 @@
     <%= paginate @courses, theme: 'twitter-bootstrap-4', pagination_class: "justify-content-center"%>
 </p>
 </div>
+</div>
 <script>
     function search(){
-      send_data=document.getElementById('tag').value
-      console.log(send_data)
+
+      send_data=document.getElementById('tag').value;
+
+      uid=document.getElementById('uid').value;
+      if (send_data.trim().length < 2 )
+      {
+        drawToast("두 글자 미만의 검색어는 사용하실 수 없습니다.");
+      }
+      else
+      {
       $.ajax({
             method: "POST",
             url: "/courses/search",
@@ -63,23 +102,37 @@
             dataType : 'json'
         })
             .done(function (data) {
-              console.log(data);
-              console.log(data[0]);
-              console.log(data.length);
-               $("#table").html(" ");
-               $("#table").append("</br>");
-               for (var i=0;i<data.length;i+=2) {
-                    $( "#table").append( "<label>" + data[i] + " : " + data[i+1]+ "</label></br>" ); }
+                console.log(data);
+                $("#list").html(" ");
+
+               for (var i=0;i<data.length;i++) {
+                    $( "#list").append( "<div id='" + uid + "_" + data[i].lecture_code + "'></div>");
+                    if(data[i].fav==true){
+                        $( "#list>#"+uid+"_"+data[i].lecture_code).append("<button id = 'btn_del' type='button' class='btn btn-danger' value='" + data[i].lecture_code + "' onClick='favorites_delete(this)'>제거</button>");
+                    }else{
+                        $( "#list>#"+uid+"_"+data[i].lecture_code).append("<button id = 'btn_add' type='button' class='btn btn-outline-primary' value='" + data[i].lecture_code + "' onClick='favorites_add(this)'>추가</button>");
+                    }
+                    var input = document.createElement("input");
+                    input.setAttribute("type", "hidden");
+                    input.setAttribute("id", data[i].lecture_code);
+                    input.setAttribute("value", uid);
+                    document.getElementById( uid+"_"+data[i].lecture_code).append(input);
+                   $( "#" + uid+"_"+data[i].lecture_code).append("<a href='/courses/" + data[i].lecture_code + "'>&nbsp; " + data[i].lecture_name + "(" + data[i].professor + ")</a>" );
+                   $("#list").append("<br>");
+                   }
             });
     }
+}
 </script>
-
+  
+  
+  
+  
 <script>
     function favorites_delete(object){
+        //제거버튼 => 추가버튼
       var c_id=object.value
       var u_id=document.getElementById(c_id).value
-      console.log(u_id)
-      console.log(c_id)
       $.ajax({
             method: "POST",
             url: "/courses/favorites_delete",
@@ -90,19 +143,19 @@
             dataType : 'json'
         })
             .done(function (data) {
-              console.log(data);
-              var name= '#' + u_id + '_' + c_id;
-              console.log(name);
-              $(name).html("")
-              $(name).append("<button type='button' class='waves-effect waves-light btn-floating blue' value='" + c_id + "' onClick='favorites_delete(this)'><i class='material-icons'>add</i></button>" +
-            "<input type='hidden' id='"+ c_id + "' value='"+ u_id+"'>");
-              
+            drawToast("제거되었습니다.");
+            var name= '#' + u_id + '_' + c_id+ '>#btn_del';
+            $(name).attr('class','btn btn-outline-primary');
+            $(name).text('추가');
+            $(name).attr('onClick','favorites_add(this)');
+            $(name).attr('id','btn_add');
     });
     }
 </script>
 
 <script>
     function favorites_add(object){
+        //추가 버튼 => 제거 버튼
       c_id=object.value
       u_id=document.getElementById(c_id).value
       console.log(u_id)
@@ -117,13 +170,38 @@
             dataType : 'json'
         })
             .done(function (data) {
-                console.log(data);
-                  var name= '#' + u_id + '_' + c_id;
-                  console.log(name);
-                  $(name).html("")
-                  $(name).append("<button type='button' class='waves-effect waves-light btn-floating red' value='" + c_id + "' onClick='favorites_delete(this)'><i class='material-icons'>remove</i></button>" +
-                  "<input type='hidden' id='"+ c_id + "' value='"+ u_id+"'>");
-                   
+             drawToast("추가되었습니다.");
+             var name= '#' + u_id + '_' + c_id+ '>#btn_add';
+             $(name).attr('class','btn btn-danger')
+             $(name).text('제거');
+             $(name).attr('onClick','favorites_delete(this)');
+             $(name).attr('id','btn_del');
     });
     }
+</script>
+
+<script>
+var intervalCounter = 0;
+
+function hideToast(){
+	var alert = document.getElementById("toast");
+	alert.style.opacity = 0;
+	clearInterval(intervalCounter);
+}
+
+function drawToast(message){
+	var alert = document.getElementById("toast");
+    if (alert != null)
+		alert.remove();
+    var toastHTML = '<div id="toast">' + message + '</div>';
+	document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+	intervalCounter = setInterval("hideToast()", 1000);
+}
+</script>
+<script>
+  $("#tag").keypress(function (e) {
+    searchValue = document.getElementById('tag').value;
+    if (e.key == 'Enter') {
+       search();
+  }});
 </script>

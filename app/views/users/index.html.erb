@@ -1,14 +1,90 @@
-<% @favorite_courses.each do |f| %>
-    <a href="/courses/<%= f.id %>">link</a>
-    <%= f.lecture.name %>
-    <%= f.professor.name %>
+<style>
+#toast{
+	position: fixed;
+	top: 80%;
+	left: 50%;
+	width: 200px;
+	background-color: black;
+	color:white;
+	margin-left: -100px;
+	border: 1px solid #666;
+	padding: 10px 0 ;
+	text-align:center;
+	opacity: .9;
 
+	
+	/* opacity time */
+	-webkit-transition: opacity 0.5s ease-out;
+	-moz-transition: opacity 0.5s ease-out;
+	-ms-transition: opacity 0.5s ease-out;
+	-o-transition: opacity 0.5s ease-out;
+	transition: opacity 0.5s ease-out;
+	
+	/* round border */
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;	
+}
+</style>
+<br>
+<div class="container">
+    <div id="list">
+       
+    <% @favorite_courses.each do |f| %>
+    
     <% if current_user %>
+    <div id="<%= current_user.id%>_<%= f.id%>">
+        <br>
         <% if Favorite.exists?(course_id: f.id, user_id: current_user.id) %>
-            <%= button_to '관심 강의에서 제거', users_favorites_delete_path(u_id: current_user, c_id: f.id),
-                          method: :post, :onClick => 'alert("관심강의에서 제거되었습니다!")' %>
-        <% end %>
+                <button type="button" id="<%=current_user.id%>" value="<%=f.id%>" onClick="favorites_delete(this);" class="btn btn-danger" style="float:left;">제거</button>
+                <a href="/courses/<%= f.id %>" style="margin-left:10px;width: auto;"><%= f.lecture.name + "(" + f.professor.name + ")"%></a>
+        <br>
+    </div>
     <% end %>
-
-
+    
+    <% end %>
+    
+    
+    
 <% end %>
+</div>
+</div>
+<script>
+    function favorites_delete(object){
+        //제거버튼 => 추가버튼
+      var c_id=object.value;
+      var u_id=object.id;
+      $.ajax({
+            method: "POST",
+            url: "/courses/favorites_delete",
+            data: {  c_id : c_id,
+                     u_id : 1
+                   
+            },
+            dataType : 'json'
+        })
+            .done(function (data) {
+             $("#"+u_id+"_"+c_id).remove();
+             drawToast("성공적으로 제거되었습니다.");
+    });
+    }
+</script>
+
+<script>
+var intervalCounter = 0;
+
+function hideToast(){
+	var alert = document.getElementById("toast");
+	alert.style.opacity = 0;
+	clearInterval(intervalCounter);
+}
+
+function drawToast(message){
+	var alert = document.getElementById("toast");
+    if (alert != null)
+		alert.remove();
+    var toastHTML = '<div id="toast">' + message + '</div>';
+	document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+	intervalCounter = setInterval("hideToast()", 1000);
+}
+</script>

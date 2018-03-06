@@ -1,3 +1,31 @@
+<style>
+#toast{
+	position: fixed;
+	top: 80%;
+	left: 50%;
+	width: 200px;
+	background-color: black;
+	color:white;
+	margin-left: -100px;
+	border: 1px solid #666;
+	padding: 10px 0 ;
+	text-align:center;
+	opacity: .9;
+
+	
+	/* opacity time */
+	-webkit-transition: opacity 0.5s ease-out;
+	-moz-transition: opacity 0.5s ease-out;
+	-ms-transition: opacity 0.5s ease-out;
+	-o-transition: opacity 0.5s ease-out;
+	transition: opacity 0.5s ease-out;
+	
+	/* round border */
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;	
+}
+</style>
 <br>
 <div class="container">
     <table>
@@ -21,12 +49,77 @@
             <br>
 <% if current_user %>
     <% if Favorite.exists?(course_id: @course.id, user_id: current_user.id) %>
-        <%= button_to '관심 강의에서 제거', users_favorites_delete_path(u_id: current_user, c_id: @course.id),
-                      method: :post, :onClick => 'alert("관심강의에서 제거되었습니다.")', class: "waves-effect waves-light btn-floating red circle" %>
+        <!--<%= button_tag '관심 강의에서 제거', :form => { :id => "button" } ,:onClick => "favorites_delete(this)", class: "waves-effect waves-light btn-floating red circle" %>-->
+        <button type="button" id="btn" value="<%= @course.id %>" onClick="favorites_delete(this)" class="waves-effect waves-light btn-floating red circle">관심강의에서 제거 </button>
     <% else %>
-        <%= button_to '관심 강의에 추가', users_favorites_add_path(u_id: current_user, c_id: @course.id),
-                      method: :post, :onClick => 'alert("관심강의에 추가되었습니다.")', class: "waves-effect waves-light btn-floating yellow darken-1 circle" %>
+        <!--<%= button_tag '관심 강의에 추가', :onClick => "favorites_add(this)", class: "waves-effect waves-light btn-floating yellow darken-1 circle" %>-->
+        <button type="button" id="btn" value="<%=@course.id%>" onClick="favorites_add(this)" class="waves-effect waves-light btn-floating yellow darken-1 circle">관심강의에 추가</button>
     <% end %>
 <% end %>
 </div>
+<script>
+    function favorites_add(object){
+        //추가 버튼 => 제거 버튼
+      c_id=object.value
+      console.log(c_id)
+      $.ajax({
+            method: "POST",
+            url: "/courses/favorites_add",
+            data: {  c_id : c_id,
+                     u_id : 1
+                   
+            },
+            dataType : 'json'
+        })
+            .done(function (data) {
+             var name= '#btn';
+             $(name).attr('class','waves-effect waves-light btn-floating yellow darken-1 circle')
+             $(name).text('관심 강의에서 제거');
+             $(name).attr('onClick','favorites_delete(this)');
+             drawToast("관심 목록에 추가 되었습니다.");
+    });
+    }
+</script>
+<script>
+    function favorites_delete(object){
+        //제거버튼 => 추가버튼
+      var c_id=object.value
+      $.ajax({
+            method: "POST",
+            url: "/courses/favorites_delete",
+            data: {  c_id : c_id,
+                     u_id : 1
+                   
+            },
+            dataType : 'json'
+        })
+            .done(function (data) {
+             var name= '#btn';
+             $(name).attr('class','waves-effect waves-light btn-floating red circle');
+             $(name).text('관심강의에 추가');
+             $(name).attr('onClick','favorites_add(this)');
+             drawToast("관심 목록에서 제거되었습니다.");
+    });
+    }
+</script>
 
+<script>
+var intervalCounter = 0;
+
+function hideToast(){
+	var alert = document.getElementById("toast");
+	alert.style.opacity = 0;
+	clearInterval(intervalCounter);
+}
+
+function drawToast(message){
+	var alert = document.getElementById("toast");
+    
+    if (alert != null)
+		alert.remove();
+	
+     var toastHTML = '<div id="toast">' + message + '</div>';
+		document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+	intervalCounter = setInterval("hideToast()", 1000);
+}
+</script>
